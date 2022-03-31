@@ -1,14 +1,12 @@
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    private static StringBuilder sb = new StringBuilder();
+    private static final StringBuilder sb = new StringBuilder();
     public static void main(String[] args) {
-
         String dirGames = "/Users/ivanporsak/IdeaProjects/Game";
 
         List<String> listDir = Arrays.asList("src", "res", "savegames", "temp");
@@ -22,9 +20,18 @@ public class Main {
         addFiles(dirGames + "/src/main/Main.java");
         addFiles(dirGames + "/src/main/Utils.java");
         addFiles(dirGames + "/temp/temp.txt");
-        String log = sb.toString();
-        //Files.write(Path.of("/Users/ivanporsak/IdeaProjects/Game/temp/temp.txt"));
 
+        String log = sb.toString();
+        writeFile(log);
+
+
+    }
+    static void writeFile(String log){
+        try {
+            Files.writeString(Path.of("/Users/ivanporsak/IdeaProjects/Game/temp/temp.txt"), log);
+        }catch (IOException exception){
+            sb.append(exception.getMessage());
+        }
     }
 
     public static void addFiles(String nameFile){
@@ -46,6 +53,7 @@ public class Main {
             sb
                     .append("Создана директория: ")
                     .append(dir)
+                    .append("/")
                     .append(s)
                     .append("\n");
         }
